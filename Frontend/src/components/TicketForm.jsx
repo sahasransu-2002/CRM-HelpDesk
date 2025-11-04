@@ -11,14 +11,15 @@ export default function TicketForm({ onCreated }) {
     e.preventDefault();
     try {
       const token = getToken();
-      const { data } = await api.post(
-        '/tickets',
-        { title, description },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+      await api.post('/tickets', { title, description }, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      alert('Ticket created successfully!');
       setTitle('');
       setDescription('');
-      onCreated(data);
+
+      if (onCreated) onCreated(); // refresh user’s list only
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to create ticket');
     }

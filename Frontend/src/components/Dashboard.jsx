@@ -11,6 +11,12 @@ export default function Dashboard() {
     nav('/login');
   };
 
+  const handleTicketCreated = () => {
+    if (TicketList.current) {
+      TicketList.current.loadTickets();
+    }
+  };
+
   return (
     <div className="dashboard">
       <div className="header">
@@ -18,8 +24,8 @@ export default function Dashboard() {
         <button onClick={handleLogout}>Logout</button>
       </div>
       <div className="content">
-        <TicketForm onCreated={() => window.location.reload()} />
-        <TicketList />
+        <TicketForm onCreated={handleTicketCreated} />
+        <TicketList ref={TicketList} />
       </div>
     </div>
   );

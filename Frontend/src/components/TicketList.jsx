@@ -22,18 +22,22 @@ export default function TicketList() {
     const handleUpdate = async (id, body) => {
         try {
             const token = getToken();
-            await api.put(`/tickets/${id}`, body, {
+            const { data } = await api.put(`/tickets/${id}`, body, {
                 headers: { Authorization: `Bearer ${token}` },
             });
-            loadTickets();
-            
-             if (body.status === 'Resolved') {
-                alert(`✅ Notification sent to user: Your ticket has been resolved.`);
+
+            //  Remove resolved tickets instantly for admin
+            if (body.status === "Resolved") {
+                setTickets((prev) => prev.filter((t) => t._id !== id));
+                alert(` Ticket "${data.title}" resolved and removed from dashboard.`);
+            } else {
+                loadTickets();
             }
         } catch (err) {
-            setError('Failed to update');
+            setError("Failed to update ticket");
         }
     };
+
 
     const handleDelete = async (id) => {
         if (!window.confirm('Delete this ticket?')) return;
