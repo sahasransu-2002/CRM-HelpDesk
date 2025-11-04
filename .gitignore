@@ -1,0 +1,18 @@
+# Ignore env files anywhere (frontend or backend)
+**/.env
+
+# Node modules
+node_modules/
+
+# Build / dist folders
+dist/
+build/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Misc system files
+.DS_Store
+Thumbs.db
